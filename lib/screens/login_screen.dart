@@ -1,3 +1,4 @@
+import 'package:album_checker/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget{
@@ -10,11 +11,10 @@ class LoginScreen extends StatelessWidget{
     return Scaffold(
       backgroundColor: Color.fromRGBO(190, 209, 121, 1),
       body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: Center(
           child: Column(
             children: [
-
-              //SizedBox(height: size.height * 0.1),
 
               Stack(
                 children: [
@@ -31,11 +31,6 @@ class LoginScreen extends StatelessWidget{
                   ),
                 ],
               ),
-
-
-
-
-
 
               SizedBox(height: size.height * 0.1),
 
@@ -56,7 +51,7 @@ class LoginScreen extends StatelessWidget{
     return GestureDetector(
       onTap: (){
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-            LoginScreen()), (Route<dynamic> route) => false);
+            RegisterScreen()), (Route<dynamic> route) => false);
       },
       child: Container(
         alignment: Alignment.center,
