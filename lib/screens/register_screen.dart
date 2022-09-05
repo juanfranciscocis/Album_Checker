@@ -109,6 +109,15 @@ class _MainCardWidget extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
+
+              const SizedBox(
+                height: 40,
+              ),
+            _Name(),
+              const SizedBox(
+                height: 40,
+              ),
+            _Age(),
               const SizedBox(
                 height: 40,
               ),
@@ -154,6 +163,76 @@ class _MainCardWidget extends StatelessWidget {
         )
       )
     );
+  }
+}
+
+class _Age extends StatelessWidget {
+  const _Age({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 265,
+      height: 48,
+      decoration: BoxDecoration(
+        borderRadius : BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
+        color : Color.fromRGBO(105, 143, 63, 1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10, left: 10),
+        child: const TextField(
+          style: TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Enter your age',
+            icon : Icon(Icons.numbers, color: Colors.white,),
+          ),
+          //TODO: ADD CONTROLLER
+        ),
+      ),
+    );
+  }
+}
+
+class _Name extends StatelessWidget {
+  const _Name({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+    width: 265,
+    height: 48,
+    decoration: BoxDecoration(
+      borderRadius : BorderRadius.only(
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
+        bottomLeft: Radius.circular(5),
+        bottomRight: Radius.circular(5),
+      ),
+      color : Color.fromRGBO(105, 143, 63, 1),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.only(right: 10, left: 10),
+      child: const TextField(
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Enter your full name',
+          icon : Icon(Icons.person, color: Colors.white,),
+        ),
+        //TODO: ADD CONTROLLER
+      ),
+    ),
+          );
   }
 }
 
