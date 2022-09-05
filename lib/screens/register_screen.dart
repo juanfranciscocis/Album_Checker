@@ -100,6 +100,7 @@ class _MainCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Card(
+      elevation: 30,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

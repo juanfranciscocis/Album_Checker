@@ -1,5 +1,10 @@
+import 'package:album_checker/models/login_firebase_model.dart';
 import 'package:album_checker/screens/screens.dart';
+import 'package:album_checker/services/login_firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/login_form_provider.dart';
 
 class LoginScreen extends StatelessWidget{
   const LoginScreen({Key? key}) : super(key: key);
@@ -90,8 +95,12 @@ class _MainCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+
+    final loginFormProvider = Provider.of<LoginFormProvider>(context);
+
+
     return Card(
+      elevation: 30,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -104,11 +113,11 @@ class _MainCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-            _Email(),
+            _Email(loginFormProvider:loginFormProvider),
               const SizedBox(
                 height: 40,
               ),
-            _Password(),
+            _Password(loginFormProvider:loginFormProvider),
 
               const SizedBox(
                 height: 40,
@@ -129,8 +138,18 @@ class _MainCardWidget extends StatelessWidget {
                     ),
                   child: Icon(Icons.arrow_forward, color: Colors.white, size: 30,),
                 ),
-                  onPressed: (){
-                    print('Login');
+                  onPressed: () async {
+                    Login login = Login(email: loginFormProvider.email, password: loginFormProvider.password);
+                    final loginFirebaseService = Provider.of<LoginFirebaseService>(context, listen: false);
+                    await loginFirebaseService.login(login);
+
+                    if(loginFirebaseService.getIsLogin() == true){
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          HomeScreen()), (Route<dynamic> route) => false);
+                    }
+
+
+
                 }
               )
 
@@ -150,8 +169,10 @@ class _MainCardWidget extends StatelessWidget {
 }
 
 class _Email extends StatelessWidget {
+  final LoginFormProvider loginFormProvider;
+
   const _Email({
-    Key? key,
+    Key? key, required  this.loginFormProvider,
   }) : super(key: key);
 
   @override
@@ -170,14 +191,18 @@ class _Email extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 10, left: 10),
-        child: const TextField(
+        child:  TextField(
+          keyboardType: TextInputType.emailAddress,
+          onChanged: (value) {
+            loginFormProvider.email = value;
+            print(loginFormProvider.email);
+            },
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Enter your email',
             icon : Icon(Icons.email, color: Colors.white,),
           ),
-          //TODO: ADD CONTROLLER
         ),
       ),
     );
@@ -185,8 +210,10 @@ class _Email extends StatelessWidget {
 }
 
 class _Password extends StatelessWidget {
+  final LoginFormProvider loginFormProvider;
+
   const _Password({
-    Key? key,
+    Key? key, required this.loginFormProvider,
   }) : super(key: key);
 
   @override
@@ -205,7 +232,13 @@ class _Password extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 10, left: 10),
-        child: const TextField(
+        child: TextField(
+          obscureText: true,
+          onChanged: (value) {
+            loginFormProvider.password = value;
+            print(loginFormProvider.password);
+          },
+
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             border: InputBorder.none,

@@ -1,9 +1,32 @@
+import 'package:album_checker/providers/providers.dart';
 import 'package:album_checker/screens/screens.dart';
+import 'package:album_checker/services/login_firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'models/login_firebase_model.dart';
 
 void main(){
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const AppState());
 }
+
+
+
+
+class AppState extends StatelessWidget{
+  const AppState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(providers:[
+      ChangeNotifierProvider(create: (_) => LoginFirebaseService()),
+      ChangeNotifierProvider(create: (_) => LoginFormProvider()),
+    ], child: const MyApp());
+  }
+}
+
+
 
 class MyApp extends StatelessWidget{
   //CONSTRUCTOR
@@ -19,6 +42,7 @@ class MyApp extends StatelessWidget{
       routes: {
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
+        '/home': (BuildContext context) => HomeScreen(),
 
       },
     );
