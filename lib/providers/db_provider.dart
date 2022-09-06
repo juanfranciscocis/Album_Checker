@@ -9,6 +9,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
+import 'package:flutter/services.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io' as io;
+
 class DBProvider extends ChangeNotifier{
 
   static Database? _database;
@@ -18,10 +24,37 @@ class DBProvider extends ChangeNotifier{
 
   DBProvider();
 
+
+  Future<Database> init() async {
+    io.Directory applicationDirectory = await getApplicationDocumentsDirectory();
+
+    String dbPath = path.join(applicationDirectory.path, "AlbumCheckerDB.db");
+
+    bool dbExists = await io.File(dbPath).exists();
+
+    if (!dbExists) {
+      // Copy from asset
+      ByteData data = await rootBundle.load(path.join("assets", "AlbumCheckerDB.db"));
+      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+      // Write and flush the bytes written
+      await io.File(dbPath).writeAsBytes(bytes, flush: true);
+    }
+
+    return _database = await openDatabase(dbPath);
+  }
+
+
+
+
+
+
+
+
   //SEARCH FOR DATABASE IN THE DEVICE AND CREATE IT IF IT DOESN'T EXIST
   Future<Database?> get database async {
     if(_database != null) return _database;
-    _database = await initDB();
+    _database = await init();
     return _database;
   }
 
