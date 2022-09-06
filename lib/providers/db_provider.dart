@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:album_checker/models/player_model.dart';
 import 'package:album_checker/models/team_model.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -48,6 +49,7 @@ class DBProvider extends ChangeNotifier{
           await db.execute('''
           CREATE TABLE Players (
           id INTEGER PRIMARY KEY,
+          player_position INTEGER,
           player_name TEXT,
           player_checked BOOLEAN,
           team_id INTEGER,
@@ -65,6 +67,20 @@ class DBProvider extends ChangeNotifier{
     final db = await database;
     final response = await db?.query('Teams');
     return response!.map((scan) => TeamModel.fromJson(scan)).toList();
+  }
+
+  //Get Players by team  id
+  Future<List<PlayerModel>>getPlayersById ( int index ) async {
+    final db = await database;
+    final response = await db?.query('Players', where: 'team_id = ?', whereArgs: [index]);
+    return response!.map((scan) => PlayerModel.fromJson(scan)).toList();
+  }
+
+  //Update a player data
+  Future<int> updatePlayer (PlayerModel playerModel) async {
+    final db = await database;
+    final response  = await db!.update('Players', playerModel.toJson(), where: 'id = ?', whereArgs: [playerModel.id]);
+    return response;
   }
 
 

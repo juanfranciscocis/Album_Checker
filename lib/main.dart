@@ -26,6 +26,7 @@ class AppState extends StatelessWidget{
       ChangeNotifierProvider(create: (_) => LoginFormProvider()),
       ChangeNotifierProvider(create: (_) => DBProvider()),
       ChangeNotifierProvider(create: (_) => TeamListProvider()),
+      ChangeNotifierProvider(create: (_) => PlayersListProvider()),
     ], child: const MyApp());
   }
 }
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget{
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
         '/home': (BuildContext context) => HomeScreen(),
+        '/players': (BuildContext context) => PlayersScreen(),
       },
     );
   }

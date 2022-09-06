@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget{
               child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index){
-                    return _Team(teamLogo: snapshot.data[index].teamLogo,teamName: snapshot.data[index].teamName,);
+                    return _Team(teamID: snapshot.data[index].id,teamLogo: snapshot.data[index].teamLogo,teamName: snapshot.data[index].teamName,);
                   }),
             );
           }else{
@@ -46,29 +46,34 @@ class HomeScreen extends StatelessWidget{
 }
 
 
+
 class _Team extends StatelessWidget {
 
+
+  final int? teamID;
   final String? teamName;
   final String? teamLogo;
+
+
 
 
   const _Team({
     Key? key,
     this.teamName,
     this.teamLogo,
+    this.teamID,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        print('tap');
-        //Navigator.of(context).pushNamed('/team');
+        Navigator.of(context).pushNamed('/players',arguments: teamID);
       },
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Card(
-          color: Color.fromRGBO(105, 143, 63, 1),
+          color: Color.fromRGBO(20, 40, 29, 1),
           elevation: 30,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -76,7 +81,7 @@ class _Team extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Color.fromRGBO(105, 143, 63, 1),
+              color: Color.fromRGBO(20, 40, 29, 1),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
