@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/login_firebase_model.dart';
+import '../providers/login_form_provider.dart';
+import '../services/login_firebase_service.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatelessWidget{
@@ -98,7 +103,9 @@ class _MainCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+
+    final loginFormProvider = Provider.of<LoginFormProvider>(context);
+
     return Card(
       elevation: 30,
       shape: RoundedRectangleBorder(
@@ -114,19 +121,15 @@ class _MainCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-            _Name(),
+            _Name(loginFormProvider:loginFormProvider),
               const SizedBox(
                 height: 40,
               ),
-            _Age(),
+            _Email(loginFormProvider:loginFormProvider),
               const SizedBox(
                 height: 40,
               ),
-            _Email(),
-              const SizedBox(
-                height: 40,
-              ),
-            _Password(),
+            _Password(loginFormProvider:loginFormProvider),
 
               const SizedBox(
                 height: 40,
@@ -147,8 +150,15 @@ class _MainCardWidget extends StatelessWidget {
                     ),
                   child: Icon(Icons.arrow_forward, color: Colors.white, size: 30,),
                 ),
-                  onPressed: (){
-                    print('Login');
+                  onPressed: () async {
+                    Login login = Login(displayName: loginFormProvider.name,email: loginFormProvider.email, password: loginFormProvider.password);
+                    final loginFirebaseService = Provider.of<LoginFirebaseService>(context, listen: false);
+                    await loginFirebaseService.register(login);
+
+                    if(loginFirebaseService.getIsRegister() == true){
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          HomeScreen()), (Route<dynamic> route) => false);
+                    }
                 }
               )
 
@@ -203,8 +213,11 @@ class _Age extends StatelessWidget {
 }
 
 class _Name extends StatelessWidget {
+
+  final LoginFormProvider loginFormProvider;
+
   const _Name({
-    Key? key,
+    Key? key, required this.loginFormProvider,
   }) : super(key: key);
 
   @override
@@ -223,7 +236,11 @@ class _Name extends StatelessWidget {
     ),
     child: Padding(
       padding: const EdgeInsets.only(right: 10, left: 10),
-      child: const TextField(
+      child:  TextField(
+        onChanged: (value) {
+          loginFormProvider.name = value;
+          print(value);
+        },
         style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -233,13 +250,15 @@ class _Name extends StatelessWidget {
         //TODO: ADD CONTROLLER
       ),
     ),
-          );
+    );
   }
 }
 
 class _Email extends StatelessWidget {
+  final LoginFormProvider loginFormProvider;
+
   const _Email({
-    Key? key,
+    Key? key, required this.loginFormProvider,
   }) : super(key: key);
 
   @override
@@ -258,7 +277,11 @@ class _Email extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 10, left: 10),
-        child: const TextField(
+        child:  TextField(
+          onChanged: (value) {
+            loginFormProvider.email = value;
+            print(value);
+          },
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -273,8 +296,10 @@ class _Email extends StatelessWidget {
 }
 
 class _Password extends StatelessWidget {
+  final LoginFormProvider loginFormProvider;
+
   const _Password({
-    Key? key,
+    Key? key, required this.loginFormProvider,
   }) : super(key: key);
 
   @override
@@ -293,7 +318,11 @@ class _Password extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 10, left: 10),
-        child: const TextField(
+        child: TextField(
+          onChanged: (value) {
+            loginFormProvider.password = value;
+            print(value);
+          },
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             border: InputBorder.none,

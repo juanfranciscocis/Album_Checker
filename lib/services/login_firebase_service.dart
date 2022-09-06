@@ -13,10 +13,12 @@ class LoginFirebaseService extends ChangeNotifier {
   //PROPERGTIES
   bool _isLoading = false;
   bool _isLogin = false;
+  bool _isRegister = false;
 
   //getters
   bool getIsLoading() => _isLoading;
   bool getIsLogin() => _isLogin;
+  bool getIsRegister() => _isRegister;
 
 
 
@@ -60,6 +62,16 @@ class LoginFirebaseService extends ChangeNotifier {
     final decodedData = json.decode(response.body);
     login.idToken = await decodedData['idToken'];
 
+    if(login.idToken != null) {
+      print('Register Successfull...');
+      print('ID TOKEN: ${login.idToken}');
+      _isRegister = true;
+    } else {
+      print('Register Failed...');
+      _isRegister = false;
+      return;
+    }
+    
     //UPDATING ACCOUNT WITH DISPLAY NAME
     final url2 = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCyVW8X_u9i7ZG4wzmfcRiRp2paqR7tu_I');
     final response2 = await http.post(url2, body: login.toJson());
