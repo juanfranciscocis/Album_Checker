@@ -1,4 +1,6 @@
+import 'package:album_checker/models/team_model.dart';
 import 'package:album_checker/providers/providers.dart';
+import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:album_checker/screens/screens.dart';
 import 'package:album_checker/services/login_firebase_service.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,8 @@ class AppState extends StatelessWidget{
     return MultiProvider(providers:[
       ChangeNotifierProvider(create: (_) => LoginFirebaseService()),
       ChangeNotifierProvider(create: (_) => LoginFormProvider()),
+      ChangeNotifierProvider(create: (_) => DBProvider()),
+      ChangeNotifierProvider(create: (_) => TeamListProvider()),
     ], child: const MyApp());
   }
 }
@@ -35,14 +39,20 @@ class MyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    final dbProvider = Provider.of<DBProvider>(context);
+    dbProvider.database;
+    //final teamListProvider = Provider.of<TeamListProvider>(context).getTeams();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/login',
+      initialRoute: '/loading',
       routes: {
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
         '/home': (BuildContext context) => HomeScreen(),
+        '/loading': (BuildContext context) => LoadingScreen(),
 
       },
     );
