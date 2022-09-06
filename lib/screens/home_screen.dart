@@ -1,41 +1,28 @@
+import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/team_list_provider.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    final teamListProvider = Provider.of<TeamListProvider>(context);
-
     return Scaffold(
-      backgroundColor: Color.fromRGBO(190, 209, 121, 1),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _Team(teamLogo: teamListProvider.teams[0].teamLogo,teamName: teamListProvider.teams[0].teamName,),
-                      SizedBox(width: 30),
-                      _Team(teamLogo: teamListProvider.teams[0].teamLogo,teamName: teamListProvider.teams[0].teamName,),
-                    ]
-                  ),
-
-                ]
-              ),
-            )
-          ),
-        ),
+      backgroundColor: Color.fromRGBO(190, 209, 121, 1) ,
+      body: FutureBuilder(
+        future: TeamListProvider().getTeams(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if(snapshot.hasData){
+            return Center(
+              child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return _Team(teamLogo: snapshot.data[index].teamLogo,teamName: snapshot.data[index].teamName,);
+                  }),
+            );
+          }else{
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color.fromRGBO(20, 40, 29, 1),
@@ -58,6 +45,7 @@ class HomeScreen extends StatelessWidget{
   }
 }
 
+
 class _Team extends StatelessWidget {
 
   final String? teamName;
@@ -77,35 +65,37 @@ class _Team extends StatelessWidget {
         print('tap');
         //Navigator.of(context).pushNamed('/team');
       },
-      child: Card(
-        color: Color.fromRGBO(105, 143, 63, 1),
-        elevation: 30,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Card(
+          color: Color.fromRGBO(105, 143, 63, 1),
+          elevation: 30,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-            color: Color.fromRGBO(105, 143, 63, 1),
           ),
-          width: 150,
-          height: 250,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: FadeInImage(
-                  placeholder: AssetImage('assets/loading.gif'),
-                  image: NetworkImage(teamLogo!),
-                  fit: BoxFit.cover,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Color.fromRGBO(105, 143, 63, 1),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: FadeInImage(
+                    placeholder: AssetImage('assets/loading.gif'),
+                    image: NetworkImage(teamLogo!),
+                    fit: BoxFit.cover,
+                    height: 150,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(teamName!.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 20),),
-              SizedBox(height: 20),
-            ],
+                SizedBox(height: 20),
+                Text(teamName!.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 20),),
+                SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

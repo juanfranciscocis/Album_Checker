@@ -47,13 +47,11 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/loading',
+      initialRoute: '/home',
       routes: {
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
         '/home': (BuildContext context) => HomeScreen(),
-        '/loading': (BuildContext context) => LoadingScreen(),
-
       },
     );
   }

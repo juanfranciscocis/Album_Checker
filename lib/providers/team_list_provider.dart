@@ -23,6 +23,8 @@ class TeamListProvider extends ChangeNotifier {
     isLoading = false;
 
     notifyListeners();
+
+    return teams;
   }
 
 
