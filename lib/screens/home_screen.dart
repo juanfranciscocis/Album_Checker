@@ -1,11 +1,15 @@
 import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //final teamListProvider = Provider.of<TeamListProvider>(context, listen: false);
+    //teamListProvider.getTeams();
+    //print(teamListProvider.teams.length);
     return Scaffold(
       backgroundColor: Color.fromRGBO(190, 209, 121, 1) ,
       body: FutureBuilder(

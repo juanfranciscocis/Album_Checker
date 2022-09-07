@@ -25,23 +25,40 @@ class DBProvider extends ChangeNotifier{
   DBProvider();
 
 
-  Future<Database> init() async {
-    io.Directory applicationDirectory = await getApplicationDocumentsDirectory();
 
-    String dbPath = path.join(applicationDirectory.path, "AlbumCheckerDB.db");
+  Future<Database> initializeDatabase() async {
+    var databasesPath = await getDatabasesPath();
+    var path = join(databasesPath, "AlbumCheckerDB.db");
+    print(path);
 
-    bool dbExists = await io.File(dbPath).exists();
+// Check if the database exists
+    var exists = await databaseExists(path);
 
-    if (!dbExists) {
+    if (!exists) {
+      // Should happen only the first time you launch your application
+      print("Creating new copy from asset");
+
+      // Make sure the parent directory exists
+      try {
+        await Directory(dirname(path)).create(recursive: true);
+      } catch (_) {}
+
       // Copy from asset
-      ByteData data = await rootBundle.load(path.join("assets", "AlbumCheckerDB.db"));
-      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      ByteData data = await rootBundle.load(join("assets", "AlbumCheckerDB.db"));
+      List<int> bytes =
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
       // Write and flush the bytes written
-      await io.File(dbPath).writeAsBytes(bytes, flush: true);
+      await File(path).writeAsBytes(bytes, flush: true);
+    } else {
+      print("Opening existing database");
     }
+// open the database
+    var bomDataTable = await openDatabase(path, readOnly: true);
 
-    return _database = await openDatabase(dbPath);
+    _database = bomDataTable;
+
+    return bomDataTable;
   }
 
 
@@ -50,13 +67,14 @@ class DBProvider extends ChangeNotifier{
 
 
 
-
-  //SEARCH FOR DATABASE IN THE DEVICE AND CREATE IT IF IT DOESN'T EXIST
+ //SEARCH FOR DATABASE IN THE DEVICE AND CREATE IT IF IT DOESN'T EXIST
   Future<Database?> get database async {
     if(_database != null) return _database;
-    _database = await init();
+    _database = await initializeDatabase();
     return _database;
   }
+
+  /*
 
   //INITIALIZE THE DATABASE
   Future<Database> initDB() async{
@@ -91,29 +109,49 @@ class DBProvider extends ChangeNotifier{
         ''');
         }
     );
+   }*/
 
-  }
+
+
 
 
   //Get All TEAMS
   Future<List<TeamModel>> getAllTeams () async {
-    final db = await database;
-    final response = await db?.query('Teams');
-    return response!.map((scan) => TeamModel.fromJson(scan)).toList();
+    try{
+      final db = await _database;
+      final response = await db?.query('Teams');
+      return response!.map((scan) => TeamModel.fromJson(scan)).toList();
+    }catch(e){
+      return [];
+    }
+
   }
 
   //Get Players by team  id
   Future<List<PlayerModel>>getPlayersById ( int index ) async {
-    final db = await database;
-    final response = await db?.query('Players', where: 'team_id = ?', whereArgs: [index]);
-    return response!.map((scan) => PlayerModel.fromJson(scan)).toList();
+    try{
+      final db = await database;
+      final response = await db?.query('Players', where: 'team_id = ?', whereArgs: [index]);
+      return response!.map((scan) => PlayerModel.fromJson(scan)).toList();
+    }catch(e){
+      print(e);
+      return [];
+    }
+
   }
 
   //Update a player data
   Future<int> updatePlayer (PlayerModel playerModel) async {
-    final db = await database;
-    final response  = await db!.update('Players', playerModel.toJson(), where: 'id = ?', whereArgs: [playerModel.id]);
-    return response;
+    try {
+      final db = await database;
+      final response = await db!.update(
+          'Players', playerModel.toJson(), where: 'id = ?',
+          whereArgs: [playerModel.id]);
+      return response;
+    }catch(e){
+      print(e);
+      return 0;
+    }
   }
 
 

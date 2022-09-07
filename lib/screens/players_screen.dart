@@ -16,7 +16,6 @@ class _PlayersScreenState extends State<PlayersScreen> {
   Widget build(BuildContext context) {
     final teamID = ModalRoute.of(context)!.settings.arguments as int;
     final playersListProvider = Provider.of<PlayersListProvider>(context, listen: false);
-    print(playersListProvider.players.length);
     return Scaffold(
       backgroundColor: Color.fromRGBO(190, 209, 121, 1) ,
 
