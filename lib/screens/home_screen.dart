@@ -39,6 +39,10 @@ class HomeScreen extends StatelessWidget{
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.check_circle,size: 30,),
+            label: 'Unchecked',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.people,size: 30),
             label: 'Profile',
           ),

@@ -54,9 +54,11 @@ class DBProvider extends ChangeNotifier{
       print("Opening existing database");
     }
 // open the database
-    var bomDataTable = await openDatabase(path, readOnly: true);
+    var bomDataTable = await openDatabase(path, readOnly: false);
 
     _database = bomDataTable;
+
+    notifyListeners();
 
     return bomDataTable;
   }
@@ -71,6 +73,7 @@ class DBProvider extends ChangeNotifier{
   Future<Database?> get database async {
     if(_database != null) return _database;
     _database = await initializeDatabase();
+    notifyListeners();
     return _database;
   }
 
@@ -120,10 +123,14 @@ class DBProvider extends ChangeNotifier{
     try{
       final db = await _database;
       final response = await db?.query('Teams');
+      notifyListeners();
       return response!.map((scan) => TeamModel.fromJson(scan)).toList();
     }catch(e){
+      notifyListeners();
       return [];
     }
+
+
 
   }
 
@@ -132,6 +139,7 @@ class DBProvider extends ChangeNotifier{
     try{
       final db = await database;
       final response = await db?.query('Players', where: 'team_id = ?', whereArgs: [index]);
+      notifyListeners();
       return response!.map((scan) => PlayerModel.fromJson(scan)).toList();
     }catch(e){
       print(e);
@@ -143,13 +151,15 @@ class DBProvider extends ChangeNotifier{
   //Update a player data
   Future<int> updatePlayer (PlayerModel playerModel) async {
     try {
-      final db = await database;
+      final db = await _database;
       final response = await db!.update(
           'Players', playerModel.toJson(), where: 'id = ?',
           whereArgs: [playerModel.id]);
+      notifyListeners();
       return response;
     }catch(e){
       print(e);
+      notifyListeners();
       return 0;
     }
   }
