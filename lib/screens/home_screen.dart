@@ -2,6 +2,8 @@ import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/bottom_navigation_provider.dart';
+
 class HomeScreen extends StatelessWidget{
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -10,6 +12,7 @@ class HomeScreen extends StatelessWidget{
     //final teamListProvider = Provider.of<TeamListProvider>(context, listen: false);
     //teamListProvider.getTeams();
     //print(teamListProvider.teams.length);
+    final navigatorProvider = Provider.of<NavigationProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Color.fromRGBO(190, 209, 121, 1) ,
       body: FutureBuilder(
@@ -29,8 +32,12 @@ class HomeScreen extends StatelessWidget{
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigatorProvider.currentPage,
+        onTap: (index){
+          navigatorProvider.currentPage = index;
+          Navigator.pushReplacementNamed(context, navigatorProvider.page);
+        },
         backgroundColor: Color.fromRGBO(20, 40, 29, 1),
-        currentIndex: 0,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: const [
@@ -115,3 +122,4 @@ class _Team extends StatelessWidget {
     );
   }
 }
+

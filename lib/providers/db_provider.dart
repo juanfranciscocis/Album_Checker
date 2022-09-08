@@ -164,6 +164,21 @@ class DBProvider extends ChangeNotifier{
     }
   }
 
+  //Get Players by team  id
+  Future<List<PlayerModel>>getPlayersByUnChecked (String f) async {
+    try{
+      final db = await database;
+      final response = await db?.query('Players', where: 'player_checked = ?', whereArgs: [f]);
+      print(response);
+      notifyListeners();
+      return response!.map((scan) => PlayerModel.fromJson(scan)).toList();
+    }catch(e){
+      print(e);
+      return [];
+    }
+
+  }
+
 
 
 

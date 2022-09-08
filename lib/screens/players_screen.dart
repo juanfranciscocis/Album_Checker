@@ -32,6 +32,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
             return ListView.builder(
               itemCount: playersListProvider.players.length,
               itemBuilder: (context, index) {
+                final playerID = playersListProvider.players[index].teamID;
                 return Padding(
                   padding: const EdgeInsets.all(10),
                   child: Card(
@@ -46,7 +47,9 @@ class _PlayersScreenState extends State<PlayersScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: ListTile(
-                          subtitle: Text(playersListProvider.players[index].playerName!,style: TextStyle(color: Colors.white, fontSize: 10)),
+                          subtitle: Text(
+                              playerID == 1 ? 'QATAR' : playerID == 2 ? 'ECUADOR' : playerID == 3 ? 'SENEGAL' : playerID == 4 ? 'NETHERLANDS' : playerID == 5 ? 'ENGLAND' : playerID == 6 ? 'IRAN' : playerID == 7 ? 'USA' : playerID == 8 ? 'WHALES' : playerID == 9 ? 'ARGENTINA' : playerID == 10 ? 'SAUDI ARABIA' : playerID == 11 ? 'MEXICO' : playerID == 12 ? 'POLAND' : playerID == 13 ? 'FRANCE' : playerID == 14 ? 'AUSTRALIA' : playerID == 15 ? 'DENMARK' : playerID == 16 ? 'TUNISIA' : playerID == 17 ? 'SPAIN' : playerID == 18 ? 'COSTA RICA' : playerID == 19 ? 'GERMANY' : playerID == 20 ? 'JAPAN' : playerID == 21 ? 'BELGIUM' : playerID == 22 ? 'CANADA' : playerID == 23 ? 'MORROCCO' : playerID == 24 ? 'CROATIA' : playerID == 25 ? 'BRAZIL' : playerID == 26 ? 'SERBIA' : playerID == 27 ? 'SWITZERLAND' : playerID == 28 ? 'CAMERROON' : playerID == 29 ? 'PORTUGAL' : playerID == 30 ? 'GHANA' : playerID == 31 ? 'URUGUAY' : playerID == 32 ? 'KOREA' : 'FIFA MUSEUM',
+                          style: TextStyle(color: Colors.white, fontSize: 10)),
                           title: Text(playersListProvider.players[index].playerPosition.toString(),style: TextStyle(color: Colors.white, fontSize: 30),),
                           trailing: CupertinoSwitch(
                             value: playersListProvider.players[index].playerChecked == 'true'? true: false,
