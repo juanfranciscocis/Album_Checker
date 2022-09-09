@@ -15,7 +15,7 @@ The app shows a full understanding of Google Firebase management as well as how 
 
 
 ## I'm looking your CV (Curriculum Vitae), where can I find useful info about this project?
-[You can take a look at some FIGMA IMAGES](https://github.com/juanfranciscocis/Album_Checker/blob/ab744a226c32a4810acb4af7a8ddfce78bf10d3a/ALBUM%20CHECKER%20FIGMA.pdf)
+[You can take a look at the FIGMA project (CLICK HERE!!!)](https://github.com/juanfranciscocis/Album_Checker/blob/ab744a226c32a4810acb4af7a8ddfce78bf10d3a/ALBUM%20CHECKER%20FIGMA.pdf)
 
 <p float="left">
   <img src="https://github.com/juanfranciscocis/Album_Checker/blob/73d316da0c58285ed2c342dcc3d5b3f1956d29c8/README%20FILES/1.png"width="300"/>
