@@ -5,12 +5,14 @@ import 'dart:convert';
 import 'package:album_checker/models/models.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class LoginFirebaseService extends ChangeNotifier {
 
 
   //PROPERGTIES
+  final storage = const FlutterSecureStorage();
   bool _isLoading = false;
   bool _isLogin = false;
   bool _isRegister = false;
@@ -34,6 +36,7 @@ class LoginFirebaseService extends ChangeNotifier {
     if(login.idToken != null) {
       print('Login Successfull...');
       print('ID TOKEN: ${login.idToken}');
+      await storage.write(key: 'token', value: login.idToken);
       _isLogin = true;
     } else {
       print('Login Failed...');
@@ -65,6 +68,7 @@ class LoginFirebaseService extends ChangeNotifier {
     if(login.idToken != null) {
       print('Register Successfull...');
       print('ID TOKEN: ${login.idToken}');
+      await storage.write(key: 'token', value: login.idToken);
       _isRegister = true;
     } else {
       print('Register Failed...');
@@ -81,6 +85,18 @@ class LoginFirebaseService extends ChangeNotifier {
 
     return decodedData['idToken'];
   }
+
+  Future logout() async {
+    await storage.delete(key: 'token');
+    return;
+  }
+
+  Future<String> readToken() async {
+
+    return await storage.read(key: 'token') ?? '';
+
+  }
+
 
 
 

@@ -12,7 +12,6 @@ class Login extends ChangeNotifier{
   String email;
   String password;
   bool returnSecureToken = true;
-
   String? idToken;
   String? displayName;
 

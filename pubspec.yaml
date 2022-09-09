@@ -34,12 +34,12 @@ dependencies:
 
 
   # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  http: ^0.13.5
-  provider: ^6.0.3
+  cupertino_icons: ^1.0.2   # Use with the CupertinoIcons class for iOS style icons.
+  http: ^0.13.5 # http package
+  provider: ^6.0.3 # State Management
   path_provider: ^2.0.11 # Path Provider is a package for accessing the filesystem.
   sqflite: ^2.0.3+1 # Sqflite is a SQLite client for Dart.
+  flutter_secure_storage: ^6.0.0 # Flutter Secure Storage is a plugin for storing data in the secure storage.
 
 dev_dependencies:
   flutter_test:

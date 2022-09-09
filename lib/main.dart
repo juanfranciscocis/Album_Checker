@@ -49,13 +49,15 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/home',
+      initialRoute: '/auth',
       routes: {
         '/login': (BuildContext context) => LoginScreen(),
         '/register': (BuildContext context) => RegisterScreen(),
         '/home': (BuildContext context) => HomeScreen(),
         '/players': (BuildContext context) => PlayersScreen(),
         '/unchecked': (BuildContext context) => UncheckedScreen(),
+        '/auth': (BuildContext context) => CheckAuthScreen(),
+        '/profile': (BuildContext context) => ProfileScreen(),
       },
     );
   }
