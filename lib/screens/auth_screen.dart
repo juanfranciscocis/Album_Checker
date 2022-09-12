@@ -15,6 +15,7 @@ class CheckAuthScreen extends StatelessWidget {
     final authService = Provider.of<LoginFirebaseService>( context, listen: false );
 
     return Scaffold(
+      backgroundColor: Color.fromRGBO(190, 209, 121, 1) ,
       body: Center(
         child: FutureBuilder(
           future: authService.readToken(),

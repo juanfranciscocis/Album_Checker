@@ -319,6 +319,7 @@ class _Password extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(right: 10, left: 10),
         child: TextField(
+          obscureText: true,
           onChanged: (value) {
             loginFormProvider.password = value;
             print(value);
