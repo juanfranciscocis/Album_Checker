@@ -1,15 +1,59 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/ad_helper.dart';
 import '../providers/bottom_navigation_provider.dart';
 import '../providers/login_form_provider.dart';
 import '../services/login_firebase_service.dart';
 
-class ProfileScreen extends StatelessWidget{
+class ProfileScreen extends StatefulWidget{
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late InterstitialAd _interstitialAd;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load ads.
+    _initAd();
+  }
+
+  void _initAd(){
+    print('init ad');
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdID,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: onAdLoaded,
+          onAdFailedToLoad: (error){
+            print('Ad failed to load: $error');
+          }
+      ),
+    );
+
+  }
+
+  void onAdLoaded(InterstitialAd ad) {
+    _interstitialAd = ad;
+    print('Ad loaded.');
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    Timer(Duration(seconds: 10), () {
+      print('SHOWING AD');
+      _interstitialAd.show();
+    });
+
     final navigatorProvider = Provider.of<NavigationProvider>(context, listen: false);
     final loginFirebaseService = Provider.of<LoginFirebaseService>(context, listen: false);
     return Scaffold(

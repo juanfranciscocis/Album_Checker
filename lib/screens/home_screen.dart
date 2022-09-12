@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:album_checker/helpers/ad_helper.dart';
 import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _initAd(){
     print('init ad');
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3104071700346749/2972082735',
+      adUnitId: AdHelper.interstitialAdID,
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: onAdLoaded,
