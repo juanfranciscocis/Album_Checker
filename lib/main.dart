@@ -4,12 +4,14 @@ import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:album_checker/screens/screens.dart';
 import 'package:album_checker/services/login_firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import 'models/login_firebase_model.dart';
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(const AppState());
 }
 
