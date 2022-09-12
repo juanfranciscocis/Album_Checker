@@ -37,13 +37,16 @@ class AppState extends StatelessWidget{
 
 
 class MyApp extends StatelessWidget{
+
+
+  
   //CONSTRUCTOR
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key,}) : super(key: key);
+
 
 
   @override
   Widget build(BuildContext context) {
-
     final dbProvider = Provider.of<DBProvider>(context);
     dbProvider.database;
     //final teamListProvider = Provider.of<TeamListProvider>(context).getTeams();
