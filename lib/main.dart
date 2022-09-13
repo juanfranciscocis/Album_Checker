@@ -3,6 +3,7 @@ import 'package:album_checker/providers/providers.dart';
 import 'package:album_checker/providers/team_list_provider.dart';
 import 'package:album_checker/screens/screens.dart';
 import 'package:album_checker/services/login_firebase_service.dart';
+import 'package:album_checker/services/snap_bar_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
+      scaffoldMessengerKey: SnapBarService.messengerKey,
       initialRoute: '/auth',
       routes: {
         '/login': (BuildContext context) => LoginScreen(),

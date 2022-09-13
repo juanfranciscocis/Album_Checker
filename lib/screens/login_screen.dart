@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/login_form_provider.dart';
+import '../services/snap_bar_service.dart';
 
 class LoginScreen extends StatelessWidget{
   const LoginScreen({Key? key}) : super(key: key);
@@ -146,6 +147,8 @@ class _MainCardWidget extends StatelessWidget {
                     if(loginFirebaseService.getIsLogin() == true){
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                           HomeScreen()), (Route<dynamic> route) => false);
+                    }else{
+                      SnapBarService.showSnackBar(loginFirebaseService.errorMessage);
                     }
 
 

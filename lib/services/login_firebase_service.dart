@@ -16,11 +16,13 @@ class LoginFirebaseService extends ChangeNotifier {
   bool _isLoading = false;
   bool _isLogin = false;
   bool _isRegister = false;
+  String errorMessage = '';
 
   //getters
   bool getIsLoading() => _isLoading;
   bool getIsLogin() => _isLogin;
   bool getIsRegister() => _isRegister;
+  String getErrorMessage() => errorMessage;
 
 
 
@@ -40,6 +42,7 @@ class LoginFirebaseService extends ChangeNotifier {
       _isLogin = true;
     } else {
       print('Login Failed...');
+      errorMessage = decodedData['error']['message'];
       _isLogin = false;
       return;
     }
@@ -72,6 +75,7 @@ class LoginFirebaseService extends ChangeNotifier {
       _isRegister = true;
     } else {
       print('Register Failed...');
+      errorMessage = decodedData['error']['message'];
       _isRegister = false;
       return;
     }

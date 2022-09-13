@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/login_firebase_model.dart';
 import '../providers/login_form_provider.dart';
 import '../services/login_firebase_service.dart';
+import '../services/snap_bar_service.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
 
@@ -158,6 +159,8 @@ class _MainCardWidget extends StatelessWidget {
                     if(loginFirebaseService.getIsRegister() == true){
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                           HomeScreen()), (Route<dynamic> route) => false);
+                    }else{
+                    SnapBarService.showSnackBar(loginFirebaseService.errorMessage);
                     }
                 }
               )
