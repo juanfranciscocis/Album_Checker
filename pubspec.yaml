@@ -41,6 +41,7 @@ dependencies:
   sqflite: ^2.0.3+1 # Sqflite is a SQLite client for Dart.
   flutter_secure_storage: ^6.0.0 # Flutter Secure Storage is a plugin for storing data in the secure storage.
   google_mobile_ads: ^2.0.1 # Google Mobile Ads is a plugin for displaying ads.
+  rename: ^2.0.1 # Rename is a plugin for renaming files and directories.
 dev_dependencies:
   flutter_test:
     sdk: flutter

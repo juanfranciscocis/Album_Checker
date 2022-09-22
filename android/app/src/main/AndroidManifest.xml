@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.album_checker">
    <application
-        android:label="AlbumChecker"
+        android:label="Album Checker"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
