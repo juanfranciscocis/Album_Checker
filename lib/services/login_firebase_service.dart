@@ -30,7 +30,7 @@ class LoginFirebaseService extends ChangeNotifier {
   Future login(Login login) async {
     _isLoading = true;
     //LOGIN USING EMAIL AND PASSWORD
-    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC2zdIgvMCVTGuxUBBLStCa5FAG0FVHoeQ');
+    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBn5lfux3QfXX67_aV2Kax1YCzpfJO7Pq4');
     final response = await http.post(url, body: login.toJson());
     final decodedData = json.decode(response.body);
     login.idToken = await decodedData['idToken'];
@@ -48,7 +48,7 @@ class LoginFirebaseService extends ChangeNotifier {
     }
 
     //GET USER DATA, DISPLAY NAME
-    final url2 = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyC2zdIgvMCVTGuxUBBLStCa5FAG0FVHoeQ');
+    final url2 = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBn5lfux3QfXX67_aV2Kax1YCzpfJO7Pq4');
     final response2 = await http.post(url2, body: login.toJson());
     final decodedData2 = json.decode(response2.body);
     login.displayName = await decodedData2['users'][0]['displayName'];
@@ -63,7 +63,7 @@ class LoginFirebaseService extends ChangeNotifier {
   Future register(Login login) async {
     _isLoading = true;
     //CREATING ACCOUNT WITH MAIL AND PASSWORD
-    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC2zdIgvMCVTGuxUBBLStCa5FAG0FVHoeQ');
+    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBn5lfux3QfXX67_aV2Kax1YCzpfJO7Pq4');
     final response = await http.post(url, body: login.toJson());
     final decodedData = json.decode(response.body);
     login.idToken = await decodedData['idToken'];
@@ -81,7 +81,7 @@ class LoginFirebaseService extends ChangeNotifier {
     }
     
     //UPDATING ACCOUNT WITH DISPLAY NAME
-    final url2 = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyC2zdIgvMCVTGuxUBBLStCa5FAG0FVHoeQ');
+    final url2 = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBn5lfux3QfXX67_aV2Kax1YCzpfJO7Pq4');
     final response2 = await http.post(url2, body: login.toJson());
     final decodedData2 = json.decode(response2.body);
 
