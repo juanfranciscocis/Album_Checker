@@ -11,8 +11,7 @@ The app shows a full understanding of Google Firebase management as well as how 
 4. Set up your apy key in the lib/services/login_firebase_service.dart file
 3. Run the app using the iOS emulator or android emulator.
 
-***SOON AT THE GOOGLE PLAY STORE***
-
+[<img src="https://github.com/juanfranciscocis/Album_Checker/blob/e8bac50bef028b2023c4a5797052f4e7d526789b/README%20FILES/A47B9C575CC9ABD2A884DBD85D2414B0BB96.png"/>](https://play.google.com/store/apps/details?id=com.juanfranciscocisneros.albumchecker)
 
 ## I'm looking your CV (Curriculum Vitae), where can I find useful info about this project?
 [You can take a look at the FIGMA project (CLICK HERE!!!)](https://github.com/juanfranciscocis/Album_Checker/blob/ab744a226c32a4810acb4af7a8ddfce78bf10d3a/ALBUM%20CHECKER%20FIGMA.pdf)
